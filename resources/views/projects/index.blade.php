@@ -6,9 +6,16 @@
 </head>
 <body>
 	<div class="container">
+		<div class="box" style="margin-top: 30px;">
+			<p class="title">ALL PROJECTS</p>
 	@foreach ($projects as $project)
+			<div class="box" style="margin-top: 30px;">
+
 		<li class="subtitle"><a href="/projects/{{$project->id}}">{{$project->title}} </a></li>
+			</div>
+
 	@endforeach
 	</div>
+</div>
 </body>
 </html>

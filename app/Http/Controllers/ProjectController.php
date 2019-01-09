@@ -12,9 +12,15 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index']);
+    }
+
+
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::where('owner_id', auth()->id())->get();
         return view('projects.index', compact('projects'));
     }
 
@@ -25,6 +31,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
+
       return view('projects.create');
 
     }
@@ -35,12 +42,21 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $project = new Project;
-        $project->title = request('title');
-        $project->description = request('description');
-        $project->save(); 
+
+        // $project = new Project;
+        // $project->title = request('title');
+        // $project->description = request('description');
+        // $attribute = (['owner_id'=> auth()->id()]);
+
+        // $project->save($attribute);
+        $attribute = request()->validate([
+            'title' => ['required'],
+            'description' => ['required']
+        ]);
+        $attribute['owner_id'] = auth()->id();
+        Project::create($attribute);
         return redirect('/projects');
     }
 
@@ -50,9 +66,10 @@ class ProjectController extends Controller
      * @param  \App\project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        $project = Project::findorfail($id);
+        
+        // $this->authorize('view', $project);
         return view('projects.show',compact('project'));
     }
 

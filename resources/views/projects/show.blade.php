@@ -6,10 +6,15 @@
 
 </head>
 <body>
-	<div class="container">
-
+	<div class="container" style="margin-top: 50px;">
+		<div class="box">
 		<p class="title">{{$project->title}} </p>
+				<div class="box">
+					<p class="title">DESCRIPTION:</p>
+					
 		<h1 class="subtitle">{{$project->description}} </h1>
 	</div>
+	</div>
+</div>
 </body>
 </html>
