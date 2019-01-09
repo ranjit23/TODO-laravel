@@ -70,6 +70,10 @@ class ProjectController extends Controller
     {
         
         // $this->authorize('view', $project);
+        if($project->owner_id != auth()->id()){
+            abort(403);
+        }
+
         return view('projects.show',compact('project'));
     }
 
@@ -83,6 +87,9 @@ class ProjectController extends Controller
     {
         // $project = Project::findorfail();
         $project = Project::findorfail($id);
+         if($project->owner_id != auth()->id()){
+            abort(403);
+        }
 
         return view('projects.edit', compact('project'));
     }
